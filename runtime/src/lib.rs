@@ -56,7 +56,9 @@ pub type BlockNumber = u64;
 pub type Nonce = u64;
 
 /// Used for the module template in `./template.rs`
-mod template;
+// mod template;
+
+mod demo;     // 引入 demo
 
 /// Opaque types. These are used by the CLI to instantiate machinery that don't need to know
 /// the specifics of the runtime. They can then be made to be agnostic over specific formats
@@ -94,6 +96,8 @@ pub mod opaque {
 pub const VERSION: RuntimeVersion = RuntimeVersion {
 	spec_name: create_runtime_str!("substrate-node-template"),
 	impl_name: create_runtime_str!("substrate-node-template"),
+	// spec_name: create_runtime_str!("demo"),
+	// impl_name: create_runtime_str!("demo-node"),
 	authoring_version: 3,
 	spec_version: 4,
 	impl_version: 4,
@@ -188,9 +192,12 @@ impl sudo::Trait for Runtime {
 }
 
 /// Used for the module template in `./template.rs`
-impl template::Trait for Runtime {
-	type Event = Event;
-}
+// impl template::Trait for Runtime {
+// 	type Event = Event;
+// }
+
+impl demo::Trait for Runtime {}
+
 
 construct_runtime!(
 	pub enum Runtime with Log(InternalLog: DigestItem<Hash, AuthorityId, AuthoritySignature>) where
@@ -206,7 +213,8 @@ construct_runtime!(
 		Balances: balances,
 		Sudo: sudo,
 		// Used for the module template in `./template.rs`
-		TemplateModule: template::{Module, Call, Storage, Event<T>},
+		// TemplateModule: template::{Module, Call, Storage, Event<T>},
+		Demo: demo::{Module, Call, Storage},
 	}
 );
 
